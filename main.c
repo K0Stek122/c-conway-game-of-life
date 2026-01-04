@@ -9,6 +9,7 @@
 
 int matrix[MATRIX_SIZE][MATRIX_SIZE] = {{0}};
 
+/* Prints the matrix in a nice format. */
 void print_matrix() {
     for (short int i = 0; i < MATRIX_SIZE; ++i) {
         for (short int j = 0; j < MATRIX_SIZE; ++j) {
@@ -23,6 +24,7 @@ void print_matrix() {
     }
 }
 
+/* Checks if any cells are living */
 int get_living_cell_count() {
     int living_cells = 0;
     for (short int i = 0; i < MATRIX_SIZE; ++i) {
@@ -35,6 +37,7 @@ int get_living_cell_count() {
     return living_cells;
 }
 
+/* Gets the count of cell's surrounding neighbours. */
 int get_all_neighbours(int x, int y) {
     int ret = 0;
     int directions[8][2] = {
@@ -71,11 +74,15 @@ bool is_cell_alive(int x, int y) {
     }
 }
 
-//TODO fix this. Currently reading the file messes up the matrix due to \n characters.
+/*
+Reads the grid matrix from grid.txt
+TODO: Need to check if grid.txt is the correct size along with MATRIX_SIZE. Right now it will cause nasty leaks and buffer overflow if
+grid.txt does not match MATRIX_SIZE**2 
+*/
 bool read_matrix_from_file() {
     FILE* f;
     f = fopen("grid.txt", "r");
-    if (!f) { //Check if file exists and opened successfully.
+    if (!f) {
         return false;
     }
     
